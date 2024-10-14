@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primaryColor: rgb(47, 51, 68);
+    --secondaryColor: rgb(83, 92, 134);
+}
+
+body {
+    display: flex;
+    background-color: var(--primaryColor);
+    justify-content: center;
+}
+
+.container {
+    background-color: var(--secondaryColor);
+    height: 550px;
+    width: 450px;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: -5px -5px 5px rgb(34, 34, 40), 
+    5px 5px 5px;
+}
+
+.display {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    box-shadow: 3px 3px 2px rgb(70, 70, 73);
+}
+
+#result {
+    align-self: flex-end;
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+#operator {
+    color: var(--primaryColor);
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+#previous {
+    position: absolute;
+    right: 40px;
+    opacity: 0.6;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.buttons {
+    margin-top: 10px;
+    border-radius: 10px;
+    height: 450px;
+    background-color: var(--primaryColor);
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 0.3fr);
+
+}
+
+button {
+    height: 70px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: var(--buttonColor, #424b46);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    column-gap: 10px;
+    row-gap: 10px;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    box-shadow: 5px 5px 5px inset rgb(113, 113, 117),
+        5px 5px 2px rgb(35, 35, 37);
+    transition: 0.5s ease;
+}
+
+button:hover {
+    background-color: #69716d;
+}
+
+button:active {
+    color: black;
+    background-color: aliceblue;
+    transition: 0.5s ease;
+}
+
+#equals {
+    grid-column: span 2;
+    width: 96%;
+    background-color: rgb(81, 157, 81);
+    color: white;
+}
+
+#plus {
+    grid-row: span 2;
+    height: 96%;
+    background-color: rgb(76, 75, 75);
+}
+
+#ac {
+    grid-column: span 2;
+    width: 96%;
+    background-color: rgb(149, 102, 102);
+}
+
+#ac:hover,
+#plus:hover,
+#equals:hover {
+    background-color: #69716d;
+}
