@@ -10,7 +10,7 @@ buttons.forEach(button => {
     button.addEventListener('click', function () {
         let input = button.value;
 
-        if (input === "allcler") {
+        if (input === "allclear") {
             result.innerText = "0";
             currentInput = "";
             operatorDisplay.innerText = "";
