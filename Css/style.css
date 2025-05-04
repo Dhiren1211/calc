@@ -111,6 +111,7 @@ button:active {
 @media (max-width: 500px) {
     #result {
         font-size: 1.6rem;
+        height: 150px;
     }
 
     button {
@@ -119,7 +120,403 @@ button:active {
     }
 
     .display {
-        height: auto;
+        height: 150px;
+    }
+}
+
+@media (max-width: 350px) {
+    button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primaryColor: rgb(47, 51, 68);
+    --secondaryColor: rgb(83, 92, 134);
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primaryColor);
+    padding: 10px;
+}
+
+.container {
+    background-color: var(--secondaryColor);
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: -5px -5px 5px rgb(34, 34, 40), 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    height: 100px;
+    position: relative;
+    box-shadow: 3px 3px 2px rgb(70, 70, 73);
+}
+
+#operator {
+    color: var(--primaryColor);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#previous {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+#result {
+    align-self: flex-end;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    background-color: var(--buttonColor, #424b46);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: inset 2px 2px 4px rgba(113, 113, 117, 0.3),
+                2px 2px 4px rgba(35, 35, 37, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #69716d;
+}
+
+button:active {
+    background-color: aliceblue;
+    color: black;
+}
+
+/* Special buttons */
+#equals {
+    grid-column: span 2;
+    background-color: rgb(81, 157, 81);
+}
+
+#plus {
+    grid-row: span 2;
+    background-color: rgb(76, 75, 75);
+}
+
+#ac {
+    grid-column: span 2;
+    background-color: rgb(149, 102, 102);
+}
+
+/* Responsive tweaks for small screens */
+@media (max-width: 500px) {
+    #result {
+        font-size: 1.6rem;
+        height: 150px;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .display {
+        height: 150px;
+    }
+}
+
+@media (max-width: 350px) {
+    button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primaryColor: rgb(47, 51, 68);
+    --secondaryColor: rgb(83, 92, 134);
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primaryColor);
+    padding: 10px;
+}
+
+.container {
+    background-color: var(--secondaryColor);
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: -5px -5px 5px rgb(34, 34, 40), 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    height: 100px;
+    position: relative;
+    box-shadow: 3px 3px 2px rgb(70, 70, 73);
+}
+
+#operator {
+    color: var(--primaryColor);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#previous {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+#result {
+    align-self: flex-end;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    background-color: var(--buttonColor, #424b46);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: inset 2px 2px 4px rgba(113, 113, 117, 0.3),
+                2px 2px 4px rgba(35, 35, 37, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #69716d;
+}
+
+button:active {
+    background-color: aliceblue;
+    color: black;
+}
+
+/* Special buttons */
+#equals {
+    grid-column: span 2;
+    background-color: rgb(81, 157, 81);
+}
+
+#plus {
+    grid-row: span 2;
+    background-color: rgb(76, 75, 75);
+}
+
+#ac {
+    grid-column: span 2;
+    background-color: rgb(149, 102, 102);
+}
+
+/* Responsive tweaks for small screens */
+@media (max-width: 500px) {
+    #result {
+        font-size: 1.6rem;
+        height: 150px;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .display {
+        height: 150px;
+    }
+}
+
+@media (max-width: 350px) {
+    button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primaryColor: rgb(47, 51, 68);
+    --secondaryColor: rgb(83, 92, 134);
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primaryColor);
+    padding: 10px;
+}
+
+.container {
+    background-color: var(--secondaryColor);
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: -5px -5px 5px rgb(34, 34, 40), 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    height: 100px;
+    position: relative;
+    box-shadow: 3px 3px 2px rgb(70, 70, 73);
+}
+
+#operator {
+    color: var(--primaryColor);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#previous {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+#result {
+    align-self: flex-end;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    background-color: var(--buttonColor, #424b46);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: inset 2px 2px 4px rgba(113, 113, 117, 0.3),
+                2px 2px 4px rgba(35, 35, 37, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #69716d;
+}
+
+button:active {
+    background-color: aliceblue;
+    color: black;
+}
+
+/* Special buttons */
+#equals {
+    grid-column: span 2;
+    background-color: rgb(81, 157, 81);
+}
+
+#plus {
+    grid-row: span 2;
+    background-color: rgb(76, 75, 75);
+}
+
+#ac {
+    grid-column: span 2;
+    background-color: rgb(149, 102, 102);
+}
+
+/* Responsive tweaks for small screens */
+@media (max-width: 500px) {
+    #result {
+        font-size: 1.6rem;
+        height: 150px;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .display {
+        height: 150px;
     }
 }
 
