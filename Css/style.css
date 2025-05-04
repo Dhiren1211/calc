@@ -26,61 +26,60 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: -5px -5px 5px rgb(34, 34, 40), 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .display {
     display: flex;
-    justify-content: space-between;
-    height: 10vh;
+    flex-direction: column;
+    justify-content: center;
     background-color: white;
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
+    height: 100px;
     position: relative;
     box-shadow: 3px 3px 2px rgb(70, 70, 73);
 }
 
-#result {
-    align-self: flex-end;
-    font-size: 4.5vw;
-    font-family: 'Trebuchet MS', sans-serif;
-}
-
 #operator {
     color: var(--primaryColor);
-    font-size: 3.5vw;
+    font-size: 1.2rem;
     font-weight: bold;
-    font-family: 'Trebuchet MS', sans-serif;
 }
 
 #previous {
     position: absolute;
-    right: 40px;
+    right: 15px;
+    top: 10px;
     opacity: 0.6;
-    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.9rem;
+}
+
+#result {
+    align-self: flex-end;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .buttons {
-    margin-top: 10px;
-    border-radius: 10px;
-    background-color: var(--primaryColor);
-    padding: 10px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
 
 button {
-    height: 10vh;
-    width: 100%;
-    border-radius: 5px;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 8px;
     background-color: var(--buttonColor, #424b46);
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 4.5vw;
-    font-family: 'Trebuchet MS', sans-serif;
-    box-shadow: 5px 5px 5px inset rgb(113, 113, 117), 5px 5px 2px rgb(35, 35, 37);
-    transition: background-color 0.3s, color 0.3s;
+    box-shadow: inset 2px 2px 4px rgba(113, 113, 117, 0.3),
+                2px 2px 4px rgba(35, 35, 37, 0.3);
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -88,14 +87,14 @@ button:hover {
 }
 
 button:active {
-    color: black;
     background-color: aliceblue;
+    color: black;
 }
 
+/* Special buttons */
 #equals {
     grid-column: span 2;
     background-color: rgb(81, 157, 81);
-    color: white;
 }
 
 #plus {
@@ -108,25 +107,25 @@ button:active {
     background-color: rgb(149, 102, 102);
 }
 
-#ac:hover,
-#plus:hover,
-#equals:hover {
-    background-color: #69716d;
-}
-
-/* Responsive adjustments for very small devices */
-@media (max-width: 400px) {
-    .display {
-        flex-direction: column;
-        height: auto;
-    }
-
-    #result, #operator {
-        font-size: 5vw;
+/* Responsive tweaks for small screens */
+@media (max-width: 500px) {
+    #result {
+        font-size: 1.6rem;
     }
 
     button {
-        font-size: 5vw;
-        height: 9vh;
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .display {
+        height: auto;
+    }
+}
+
+@media (max-width: 350px) {
+    button {
+        font-size: 0.9rem;
+        padding: 10px;
     }
 }
