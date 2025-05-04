@@ -2,9 +2,11 @@ let result = document.getElementById('result');
 let buttons = document.querySelectorAll('button');
 let operatorDisplay = document.getElementById('operator');
 let previousDisplay = document.getElementById('previous');
+
 let operator = '';
 let firstInput = '';
 let currentInput = '';
+let lastWasEquals = false;
 
 buttons.forEach(button => {
     button.addEventListener('click', function () {
@@ -13,70 +15,95 @@ buttons.forEach(button => {
         if (input === "allclear") {
             result.innerText = "0";
             currentInput = "";
-            operatorDisplay.innerText = "";
+            operator = "";
+            firstInput = "";
             previousDisplay.innerText = "";
-        } else if (input === "clear") {
+            operatorDisplay.innerText = "";
+            lastWasEquals = false;
+        }
+
+        else if (input === "clear") {
+            // If last operation was equals, edit result instead of clearing everything
+            if (lastWasEquals) {
+                currentInput = result.innerText;
+                lastWasEquals = false;
+            }
             currentInput = currentInput.slice(0, -1);
             result.innerText = currentInput || '0';
-        } else if (input === "sqrt") {
+        }
+
+        else if (input === "sqrt") {
             if (result.innerText !== "0") {
                 currentInput = parseFloat(result.innerText);
                 result.innerText = Math.sqrt(currentInput).toString();
                 operatorDisplay.innerText = "√";
                 previousDisplay.innerText = "";
+                currentInput = result.innerText;
+                lastWasEquals = true;
             }
-        } else if (input === "mod") {
-            if (result.innerText !== "0") {
-                firstInput = parseFloat(result.innerText);
-                previousDisplay.innerText = firstInput;
-                operatorDisplay.innerText = "%";
-                operator = "mod"; 
-                currentInput = "";
-                result.innerText = "0";
-            }
-        } else if (["+", "-", "/", "*"].includes(input)) {
-            if (result.innerText !== "0") {
-                firstInput = parseFloat(result.innerText);
-                previousDisplay.innerText = firstInput;
-                operator = input;
-                operatorDisplay.innerText = operator;
-                currentInput = "";
-                result.innerText = "0";
-            }
-        } else if (input === "equals") {
+        }
+
+        else if (input === "mod") {
+            firstInput = parseFloat(result.innerText);
+            operator = "mod";
+            operatorDisplay.innerText = "%";
+            previousDisplay.innerText = firstInput;
+            currentInput = "";
+            result.innerText = "0";
+            lastWasEquals = false;
+        }
+
+        else if (["+", "-", "÷", "×"].includes(input)) {
+            firstInput = parseFloat(result.innerText);
+            operator = input;
+            operatorDisplay.innerText = operator;
+            previousDisplay.innerText = firstInput;
+            currentInput = "";
+            result.innerText = "0";
+            lastWasEquals = false;
+        }
+
+        else if (input === "equals") {
             if (previousDisplay.innerText) {
                 firstInput = parseFloat(previousDisplay.innerText);
-                currentInput = parseFloat(result.innerText);
+                let secondInput = parseFloat(result.innerText);
+                let output;
+
                 switch (operator) {
                     case '+':
-                        result.innerText = (firstInput + currentInput).toString(); 
+                        output = firstInput + secondInput;
                         break;
                     case '-':
-                        result.innerText = (firstInput - currentInput).toString(); 
+                        output = firstInput - secondInput;
                         break;
-                    case '*':
-                    case 'x':
-                        result.innerText = (firstInput * currentInput).toString();
+                    case '×':
+                        output = firstInput * secondInput;
                         break;
-                    case '/':
-                        if (currentInput !== 0) {
-                            result.innerText = (firstInput / currentInput).toString();
-                        } else {
-                            result.innerText = "Error";
-                        }
+                    case '÷':
+                        output = secondInput !== 0 ? firstInput / secondInput : "Error";
                         break;
-                    case "mod":
-                        result.innerText = (firstInput % currentInput).toString();
+                    case 'mod':
+                        output = firstInput % secondInput;
                         break;
                     default:
-                        result.innerText = "0";
-                        break;
+                        output = result.innerText;
                 }
-                operator = '';
-                currentInput = '';
+
+                result.innerText = output.toString();
+                currentInput = output.toString(); // ← this is key!
                 previousDisplay.innerText = '';
+                operatorDisplay.innerText = '';
+                operator = '';
+                lastWasEquals = true;
             }
-        } else {
+        }
+
+        else {
+            if (lastWasEquals) {
+                currentInput = "";
+                result.innerText = "";
+                lastWasEquals = false;
+            }
             currentInput += input;
             result.innerText = currentInput;
         }
