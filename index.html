@@ -1,42 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sci-Fi Calculator</title>
     <link rel="stylesheet" href="./Css/style.css">
-    <title>Calc</title>
-</head>
-<body>
-    <div class="container">
-       <div class="display">
-        <span id="operator"></span>
-        <span id="previous"></span>
-         <h3 id="result">0</h3>
-       </div>
-       <div class="buttons">
-        <button value="allclear" id="ac" >AC</button>
-        <button value="clear" >C</button>
-        <button value="÷" >&divide;</button>
-        <button value="9" >9</button>
-        <button value="8" >8</button>
-        <button value="7" >7</button>
-        <button value="×" >&times;</button>
-        <button value="6" >6</button>
-        <button value="5" >5</button>
-        <button value="4" >4</button>
-        <button value="+" id="plus">+</button>
-        <button value="3" >3</button>
-        <button value="2" >2</button>
-        <button value="1" >1</button>
-        <button value="0" >0</button>
-        <button value="00">00</button>
-        <button value="." >.</button>
-        <button value="-" >-</button>
-        <button value="sqrt" >&radic;</button>
-        <button value="mod" >%</button>
-        <button value="equals" id="equals">=</button>
-       </div>
+  </head>
+  <body>
+    <div class="calculator-container">
+      <h1>Sci-Fi Calculator</h1>
+
+      <div class="calculator-wrapper">
+
+        <div class="calculator-main">
+          <div id="display" class="display">0</div>
+          <div class="sci-buttons">
+            <button onclick="append('sin(')">sin</button>
+            <button onclick="append('cos(')">cos</button>
+            <button onclick="append('tan(')">tan</button>
+            <button onclick="append('√(')">√</button>
+            <button onclick="append('²')">x²</button>
+            <button onclick="append('log10(')">log</button>
+            <button onclick="append('ln(')">ln</button>
+            <button onclick="append('π')">π</button>
+            <button onclick="append('.E')">e</button>
+            <button onclick="append('abs(')">|x|</button>
+            <button onclick="append('sinh(')">sinh</button>
+            <button onclick="append('cosh(')">cosh</button>
+            <button onclick="append('tanh(')">tanh</button>
+            <button onclick="append('!')">!</button>
+            <button onclick="append('^')">xʸ</button>
+               <button onclick="append('EXP')">EXP</button>
+          </div>
+
+          <div class="buttons">
+            <button onclick="clearDisplay()" id="ac">AC</button>
+            <button onclick="delLast()">DEL</button>
+            <button onclick="append('%')">%</button>
+            <button onclick="append('Ans')">Ans</button>
+            <button onclick="append('7')">7</button>
+            <button onclick="append('8')">8</button>
+            <button onclick="append('9')">9</button>
+            <button onclick="append('×')">×</button>
+            <button onclick="append('÷')">÷</button>
+            <button onclick="append('4')">4</button>
+            <button onclick="append('5')">5</button>
+            <button onclick="append('6')">6</button>
+            <button onclick="append('-')">-</button>
+            <button onclick="append('(')">(</button>
+            <button onclick="append('1')">1</button>
+            <button onclick="append('2')">2</button>
+            <button onclick="append('3')">3</button>
+            <button onclick="append('+')">+</button>
+            <button onclick="append(')')">)</button>
+            <button onclick="append('0')">0</button>
+            <button onclick="append('00')">00</button>
+            <button onclick="append('.')">.</button>
+            <button id="equals" onclick="calculate()">=</button>
+          </div>
+        </div>
+
+        <div class="history">
+          <div class="history-header">
+            <h3>History</h3>
+            <button id="clear-history" onclick="clearHistory()">Clear</button>
+          </div>
+          <div id="history-log"></div>
+        </div>
+      </div>
     </div>
     <script src="./js/index.js"></script>
-</body>
+  </body>
 </html>
