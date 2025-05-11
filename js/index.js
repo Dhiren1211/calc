@@ -1,111 +1,138 @@
-let result = document.getElementById('result');
-let buttons = document.querySelectorAll('button');
-let operatorDisplay = document.getElementById('operator');
-let previousDisplay = document.getElementById('previous');
+const display = document.getElementById('display');
+const historyLog = document.getElementById('history-log');
+let displayValue = '0';
+let lastAnswer = 0;
 
-let operator = '';
-let firstInput = '';
-let currentInput = '';
-let lastWasEquals = false;
+const operators = ['+', '-', '*', '/', '^', '%'];
+const scientificConstants = ['π', 'e', 'Ans'];
 
-buttons.forEach(button => {
-    button.addEventListener('click', function () {
-        let input = button.value;
+function updateDisplay(value = displayValue) {
+  display.innerText = value;
+}
 
-        if (input === "allclear") {
-            result.innerText = "0";
-            currentInput = "";
-            operator = "";
-            firstInput = "";
-            previousDisplay.innerText = "";
-            operatorDisplay.innerText = "";
-            lastWasEquals = false;
-        }
+function append(value) {
+  const lastChar = displayValue.slice(-1);
 
-        else if (input === "clear") {
-            // If last operation was equals, edit result instead of clearing everything
-            if (lastWasEquals) {
-                currentInput = result.innerText;
-                lastWasEquals = false;
-            }
-            currentInput = currentInput.slice(0, -1);
-            result.innerText = currentInput || '0';
-        }
+  // Handle EXP button differently
+  if (value === 'EXP') {
+    if (displayValue === '0') {
+      displayValue = '1e';
+    } else {
+      displayValue += 'e';
+    }
+    updateDisplay();
+    return;
+  }
 
-        else if (input === "sqrt") {
-            if (result.innerText !== "0") {
-                currentInput = parseFloat(result.innerText);
-                result.innerText = Math.sqrt(currentInput).toString();
-                operatorDisplay.innerText = "√";
-                previousDisplay.innerText = "";
-                currentInput = result.innerText;
-                lastWasEquals = true;
-            }
-        }
+  // Prevent two consecutive operators
+  if (operators.includes(lastChar) && operators.includes(value)) return;
 
-        else if (input === "mod") {
-            firstInput = parseFloat(result.innerText);
-            operator = "mod";
-            operatorDisplay.innerText = "%";
-            previousDisplay.innerText = firstInput;
-            currentInput = "";
-            result.innerText = "0";
-            lastWasEquals = false;
-        }
+  // Prevent operator after scientific constant without proper syntax
+  if (scientificConstants.includes(lastChar) && !['(', ')', '+', '-', '×', '÷', '^', '%'].includes(value)) {
+    return;
+  }
 
-        else if (["+", "-", "÷", "×"].includes(input)) {
-            firstInput = parseFloat(result.innerText);
-            operator = input;
-            operatorDisplay.innerText = operator;
-            previousDisplay.innerText = firstInput;
-            currentInput = "";
-            result.innerText = "0";
-            lastWasEquals = false;
-        }
+  // Reset display if initial '0'
+  if (displayValue === '0' && value !== '.') {
+    displayValue = value;
+  } else {
+    displayValue += value;
+  }
 
-        else if (input === "equals") {
-            if (previousDisplay.innerText) {
-                firstInput = parseFloat(previousDisplay.innerText);
-                let secondInput = parseFloat(result.innerText);
-                let output;
+  updateDisplay();
+}
 
-                switch (operator) {
-                    case '+':
-                        output = firstInput + secondInput;
-                        break;
-                    case '-':
-                        output = firstInput - secondInput;
-                        break;
-                    case '×':
-                        output = firstInput * secondInput;
-                        break;
-                    case '÷':
-                        output = secondInput !== 0 ? firstInput / secondInput : "Error";
-                        break;
-                    case 'mod':
-                        output = firstInput % secondInput;
-                        break;
-                    default:
-                        output = result.innerText;
-                }
+function clearDisplay() {
+  displayValue = '0';
+  updateDisplay();
+}
 
-                result.innerText = output.toString();
-                currentInput = output.toString(); // ← this is key!
-                previousDisplay.innerText = '';
-                operatorDisplay.innerText = '';
-                operator = '';
-                lastWasEquals = true;
-            }
-        }
+function delLast() {
+  if (displayValue.length > 1) {
+    displayValue = displayValue.slice(0, -1);
+  } else {
+    displayValue = '0';
+  }
+  updateDisplay();
+}
 
-        else {
-            if (lastWasEquals) {
-                currentInput = "";
-                result.innerText = "";
-                lastWasEquals = false;
-            }
-            currentInput += input;
-            result.innerText = currentInput;
-        }
-    });
-});
+function factorial(n) {
+  if (n < 0 || !Number.isInteger(n)) return NaN;
+  return n <= 1 ? 1 : n * factorial(n - 1);
+}
+
+function isBalanced(str) {
+  let stack = [];
+  for (let char of str) {
+    if (char === '(') stack.push(char);
+    else if (char === ')') {
+      if (!stack.length) return false;
+      stack.pop();
+    }
+  }
+  return stack.length === 0;
+}
+
+function calculate() {
+  try {
+    const rawExpression = displayValue;
+    let expression = rawExpression;
+
+    // Replace EXP (scientific notation) with JavaScript syntax
+    expression = expression.replace(/(\d+)e([+-]?\d+)/g, '$1e$2');
+    expression = expression.replace(/([)πe]|\d)e([+-]?\d+)/g, '$1*10^$2');
+
+    // Replace other math symbols and functions
+    expression = expression
+      .replace(/×/g, '*')
+      .replace(/÷/g, '/')
+      .replace(/π/g, 'Math.PI')
+      .replace(/e([^0-9]|$)/g, 'Math.E$1') // Only replace 'e' when not part of scientific notation
+      .replace(/Ans/g, lastAnswer)
+      .replace(/√\(/g, 'Math.sqrt(')
+      .replace(/log10\(/g, 'Math.log10(')
+      .replace(/ln\(/g, 'Math.log(')
+      .replace(/sin\(/g, 'Math.sin(')
+      .replace(/cos\(/g, 'Math.cos(')
+      .replace(/tan\(/g, 'Math.tan(')
+      .replace(/sinh\(/g, 'Math.sinh(')
+      .replace(/cosh\(/g, 'Math.cosh(')
+      .replace(/tanh\(/g, 'Math.tanh(')
+      .replace(/abs\(/g, 'Math.abs(')
+      .replace(/(\d+)!/g, (_, num) => `factorial(${parseInt(num)})`)
+      .replace(/(\d+)\^(\d+)/g, 'Math.pow($1,$2)')
+      .replace(/(\d+)²/g, 'Math.pow($1,2)')
+      .replace(/%/g, '/100');
+
+    // Handle scientific notation (like 1.23e4)
+    expression = expression.replace(/(\d*\.?\d+)e([+-]?\d+)/g, '$1*10**$2');
+
+    if (!isBalanced(expression)) throw new Error("Unbalanced parentheses");
+
+    const result = eval(expression);
+    if (isNaN(result) || !isFinite(result)) throw new Error("Invalid result");
+
+    lastAnswer = result;
+    displayValue = result.toString();
+    updateDisplay();
+    addToHistory(rawExpression, result);
+  } catch (e) {
+    displayValue = 'Error';
+    updateDisplay();
+    console.error("Calculation error:", e);
+  }
+}
+
+function clearHistory() {
+  historyLog.innerHTML = '';
+}
+
+function addToHistory(expression, result) {
+  const historyItem = document.createElement('div');
+  historyItem.className = 'history-item';
+  historyItem.innerHTML = `
+    <span class="history-expression">${expression}</span>
+    <span class="history-result">= ${result}</span>
+  `;
+  historyLog.prepend(historyItem);
+}
